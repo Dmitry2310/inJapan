@@ -1,0 +1,33 @@
+ .media {
+   height: 140px;
+ }
+
+ .card {
+   display: flex;
+   flex-direction: column;
+   border-radius: 15px;
+   height: 100%;
+   position: relative;
+ }
+
+ .overlay {
+   position: absolute;
+   top: 20px;
+   left: 20px;
+   color: white;
+ }
+
+ .grid {
+   display: flex;
+ }
+
+ .cardActions {
+   padding: 0 16px 8px 16px;
+   display: flex;
+   justify-content: space-between;
+ }
+
+ .cardAction {
+   display: flex;
+   flex-direction: column;
+ }

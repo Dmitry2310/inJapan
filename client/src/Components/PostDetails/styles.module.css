@@ -1,0 +1,84 @@
+.media {
+  height: 140px;
+}
+
+.overlay {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: white;
+}
+
+.cardAction {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.loadingPaper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  height: 39vh;
+  margin-top: 50px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 15px;
+  height: 100%;
+  position: relative;
+}
+
+.cardItem {
+  margin: 10px 10px 10px 0;
+  min-width: 190px;
+  max-width: 190px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cardActions {
+  padding: 0 16px 8px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.section {
+  border-radius: 20px;
+  margin: 10px 0 10px 0;
+  flex: 1;
+}
+
+.recommendedPosts {
+  overflow: hidden;
+  display: flex;
+  overflow-x: auto;
+}
+
+.image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-height: 100%;
+  max-width: 100%;
+  border-radius: 16px;
+}
+
+@media screen and (max-width: 600px) {
+  .cardWrapper {
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+  }
+
+  .mediaCover {
+    border-radius: 20px;
+    object-fit: cover;
+  }
+}
