@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const baseURL = 'https://amber-goshawk-vest.cyclic.app';
+export const baseURL = 'https://alert-pink-lion.cyclic.app';
 
 const API = axios.create({
     baseURL
