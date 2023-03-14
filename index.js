@@ -8,8 +8,8 @@ import postRoutes from "./routes/posts.js";
 import userRoutes from "./routes/users.js";
 
 const app = express();
-app.use('/Images/Avatars', express.static('Images/Avatars'));
-app.use('/Images/PostImages', express.static('Images/PostImages'));
+/* app.use('/Images/Avatars', express.static('Images/Avatars'));
+app.use('/Images/PostImages', express.static('Images/PostImages')); */
 dotenv.config();
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
@@ -20,9 +20,8 @@ app.use('/posts', postRoutes);
 app.use('/user', userRoutes);
 
 const PORT = process.env.PORT || 5000;
-const URL = process.env.CONNECTION_URL;
 
-mongoose.connect(URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => app.listen(PORT, () => console.log(`Server run on port: ${PORT}`)))
     .catch((error) => console.log(error.message));
 

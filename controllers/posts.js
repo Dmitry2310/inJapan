@@ -2,20 +2,21 @@ import mongoose from "mongoose";
 import PostMessage from "../models/postMessage.js";
 import User from "../models/user.js";
 import fs from 'fs';
+import { Console } from "console";
 
 export const createPost = async (req, res) => {
 
-    const { postTitle, postMessage, postVideo, postTags } = req.body;
-    console.log(req.body)
+    const { title, message, selectedVideo, tags } = req.body;
+    
     try {
         const newPost = new PostMessage({
-            title: postTitle,
-            message: postMessage,
+            title: title,
+            message: message,
             creatorId: req.userId,
             creator: req.userId,
-            tags: postTags.split(','),
+            tags: tags,
             /* selectedFile: req.file ? req.file.path : '', */
-            selectedVideo: postVideo,
+            selectedVideo: selectedVideo,
             createdAt: new Date().toISOString()
         });
         await newPost.save();
@@ -28,12 +29,12 @@ export const createPost = async (req, res) => {
 export const updatePost = async (req, res) => {
 
     const { id } = req.params;
-    const { postTitle, postMessage, postVideo, postTags, coverFile } = req.body;
-
+    const { title, message, tags, selectedVideo, selectedFile } = req.body;
+    
     const post = await PostMessage.findById(id);
-    const pathToFile = `${post.selectedFile}`;
+   /*  const pathToFile = `${post.selectedFile}`; */
 
-    if (post.selectedFile !== '') {
+    /* if (post.selectedFile !== '') {
         fs.unlink(pathToFile, function (err) {
             if (err) {
                 throw err
@@ -41,14 +42,14 @@ export const updatePost = async (req, res) => {
                 console.log("Successfully deleted the file.")
             }
         })
-    };
+    }; */
 
     const newBody = {
-        title: postTitle,
-        message: postMessage,
-        tags: postTags.split(','),
-        selectedVideo: postVideo,
-        selectedFile: req.file ? req.file.path : coverFile,
+        title: title,
+        message: message,
+        tags: tags,
+        selectedVideo: selectedVideo,
+       /*  selectedFile: req.file ? req.file.path : coverFile, */
     };
 
     try {
@@ -107,7 +108,7 @@ export const getPost = async (req, res) => {
 export const getPostsBySearch = async (req, res) => {
 
     const { searchQuery, tags } = req.query;
-
+    console.log(req.query)
     try {
         const title = new RegExp(searchQuery, 'i'); // "i" => Test, test, TEST => test
 

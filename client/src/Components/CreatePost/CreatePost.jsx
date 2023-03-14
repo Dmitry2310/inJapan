@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Paper, Typography } from '@material-ui/core/';
-import { useDispatch } from 'react-redux';
+import { Paper, Typography, CircularProgress } from '@material-ui/core/';
+import { useDispatch, useSelector } from 'react-redux';
 import TextField from '@mui/material/TextField';
 import { Grid, ThemeProvider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -17,12 +17,14 @@ import { useTranslation } from "react-i18next";
 
 const CreatePost = () => {
 
+    const [isLoading, setIsLoading] = useState(false);
     const [postData, setPostData] = useState({
         title: '',
         message: '',
         tags: [],
         selectedVideo: '',
     });
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -35,6 +37,7 @@ const CreatePost = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(createPost({ ...postData }, selectedImage, navigate));
+        setIsLoading(true);
         clear();
         setSelectedImage('');
     };
@@ -56,6 +59,16 @@ const CreatePost = () => {
         hiddenFileInput.current.click();
     };
     // END Upload cover photo -------------
+    
+    if (isLoading) {
+        return (
+            <Paper elevation={6} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '15px', height: '39vh', marginTop: '50px' }}>
+                <ThemeProvider theme={themeColor}>
+                    <CircularProgress size="7em" />
+                </ThemeProvider>
+            </Paper>
+        );
+    };
 
     return (
         <Paper style={{ padding: '20px', borderRadius: '15px', marginTop: '30px' }} elevation={6}>

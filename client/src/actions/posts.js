@@ -38,18 +38,18 @@ export const getUserPosts = (userId) => async (dispatch) => {
     }
 };
 
-export const createPost = (post, selectedImage, navigate) => async (dispatch) => {
+export const createPost = (postData, selectedImage, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
-        const formData = new FormData();
+       /*  const formData = new FormData();
         formData.append('coverImage', selectedImage);
         formData.append('postTitle', post.title);
         formData.append('postMessage', post.message);
         formData.append('postTags', post.tags);
-        formData.append('postVideo', post.selectedVideo);
-        const { data } = await api.createPost(formData);
-        dispatch({ type: CREATE, payload: data });
+        formData.append('postVideo', post.selectedVideo); */
+        const { data } = await api.createPost(postData);
         navigate(`/posts/${data._id}`);
+        dispatch({ type: CREATE, payload: data });
         dispatch({ type: END_LOADING });
     } catch (error) {
         console.log(error.message);
@@ -59,17 +59,17 @@ export const createPost = (post, selectedImage, navigate) => async (dispatch) =>
 export const updatePost = (id, post, selectedImage, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
-        const formData = new FormData();
+        /* const formData = {}
         formData.append('postTitle', post.title);
         formData.append('postMessage', post.message);
         formData.append('postTags', post.tags);
         formData.append('postVideo', post.selectedVideo);
-        formData.append('coverFile', post.selectedFile);
+        formData.append('coverFile', post.selectedFile); */
 
-        if (selectedImage !== '') {
+       /*  if (selectedImage !== '') {
             formData.append('coverImage', selectedImage);
-        }
-        const { data } = await api.updatePost(id, formData);
+        } */
+        const { data } = await api.updatePost(id, post);
         const action = { type: UPDATE, payload: data };
         dispatch(action);
         navigate(`/posts/${data._id}`);
