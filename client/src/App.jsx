@@ -33,7 +33,7 @@ export const themeColor = createTheme({
 const App = () => {
 
     let notification = useSelector((state) => state.auth.message)
-    
+
     useEffect(() => {
         if (notification !== ' ') {
             toast.error(notification)
@@ -42,7 +42,7 @@ const App = () => {
 
     return (
         < Router>
-            < Container maxWidth="xl">
+            < Container maxWidth="xl" sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
                 < Navbar />
                 < ToastContainer position="top-right"
                     autoClose={5000}

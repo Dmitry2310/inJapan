@@ -14,6 +14,6 @@ router.patch('/update/:id', auth, updateUser);
 router.delete('/:id', auth, deleteUser);
 router.patch('/:id/follow', auth, followUser);
 router.post('/find', getAuthor);
-router.post('/upload', auth, file.single('avatar'), updateAvatar)
+router.post('/upload', auth/* , file.single('avatar') */, updateAvatar);
 
 export default router;

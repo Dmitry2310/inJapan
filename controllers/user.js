@@ -4,24 +4,22 @@ import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 import fs from 'fs';
 
-const SECRET_KEY = process.env.SECRET_KEY;
-
 export const signIn = async (req, res) => {
 
     const { email, password } = req.body;
-
     try {
         const existingUser = await User.findOne({ email });
+        
         if (!existingUser) return res.status(400).json({ message: "User doesn't exist." });
 
         const isPasswordcorrect = await bcrypt.compare(password, existingUser.password);
         if (!isPasswordcorrect) return res.status(400).json({ message: "Invalid password or email" });
 
-        const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, SECRET_KEY, { expiresIn: "3h" });
-
+        const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: "3h" });
+        console.log(token)
         res.status(200).json({ result: existingUser, token })
     } catch (error) {
-        res.status(500).json({ message: "Something went wrong." });
+        res.status(500).json({ error});
     }
 };
 
@@ -40,7 +38,7 @@ export const signUp = async (req, res) => {
 
         const result = await User.create({ email, password: hashedPassword, name: firstName });
 
-        const token = jwt.sign({ email: result.email, id: result._id }, SECRET_KEY, { expiresIn: "1d" });
+        const token = jwt.sign({ email: result.email, id: result._id }, process.env.SECRET_KEY, { expiresIn: "1d" });
 
         res.status(201).json({ result, token, message: 'register success' });
     } catch (error) {
@@ -96,7 +94,7 @@ export const updateUser = async (req, res) => {
     try {
         if (id === req.userId || req.body.isAdmin) {
             const updatedUser = await User.findByIdAndUpdate(id, userParams, { new: true });
-            const token = jwt.sign({ email: updatedUser.email, id: updatedUser._id }, SECRET_KEY, { expiresIn: "3h" });
+            const token = jwt.sign({ email: updatedUser.email, id: updatedUser._id }, process.env.SECRET_KEY, { expiresIn: "3h" });
             res.status(200).json({ result: updatedUser, token });
         } else {
             res.status(403).json({ message: "You don't have access." });
@@ -122,7 +120,7 @@ export const updateAvatar = async (req, res) => {
                 })
             };
             const updatedUser = await User.findByIdAndUpdate(req.userId, { avatar: req.file.path }, { new: true });
-            const token = jwt.sign({ email: updatedUser.email, id: updatedUser._id }, SECRET_KEY, { expiresIn: "3h" });
+            const token = jwt.sign({ email: updatedUser.email, id: updatedUser._id }, process.env.SECRET_KEY, { expiresIn: "3h" });
             res.status(200).json({ result: updatedUser, token });
         } else {
             res.status(403).json({ message: "Where is a photo?" });

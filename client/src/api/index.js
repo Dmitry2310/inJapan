@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const baseURL = 'https://alert-pink-lion.cyclic.app';
+export const baseURL = 'http://localhost:5000'; 
 
 const API = axios.create({
     baseURL

@@ -66,14 +66,14 @@ const RatingUsers = () => {
 
     return (
         <>
-            <Paper elevation={6} sx={{ minHeight: '335px', padding: '0 10px 10px 10px', display: 'flex', flexDirection: 'column', maxHeight: '385px' }}>
+            <Paper elevation={6} sx={{ minHeight: '335px', padding: '0 10px 10px 10px', display: 'flex', flexDirection: 'column', maxHeight: '385px', marginTop: '10px' }}>
                 <Box sx={{ display: 'flex', padding: '5px', alignItems: 'center', justifyContent: 'space-between' }}>
                     {isSearch
                         ?
                         <>
                             <TextField onKeyDown={handleKeyPress} sx={{ display: 'flex', marginRight: '5px' }} name="Author" size="small" variant="outlined" label={t("Find_Author")} color="primary" fullWidth value={searchData} onChange={(e) => setSearchData(e.target.value)} />
                             <Button variant="contained" size="small" onClick={closeSearching} color='secondary' sx={{ maxHeight: '35px' }}>
-                               <Typography sx={{padding: '5px'}}>{t("Close")}</Typography> 
+                                <Typography sx={{ padding: '5px' }}>{t("Close")}</Typography>
                             </Button>
                         </>
                         :
@@ -81,7 +81,7 @@ const RatingUsers = () => {
                             <Button variant="contained" size="small" onClick={() => setIsSearch(true)} sx={{ maxHeight: '35px' }}>
                                 <SearchIcon />
                             </Button>
-                            <Typography sx={{ padding: '8px', fontWeight: '500', textAlign: 'center' }}>{t("Best_Authors")}</Typography>
+                            <Typography sx={{ padding: '8px', fontWeight: '500', textAlign: 'center', fontSize: '14px' }}>{t("Best_Authors")}</Typography>
                             <Button variant="contained" size="small" onClick={closeSearching} color='secondary' sx={{ maxHeight: '35px' }}>
                                 {t("Clear")}
                             </Button>

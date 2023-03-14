@@ -41,7 +41,7 @@ const Profile = () => {
     const { id } = useParams();
     const location = useLocation();
     const { t } = useTranslation();
-
+   
     //SET new user ----------------------
     useEffect(() => {
         if (id === ownerId) {
@@ -112,9 +112,18 @@ const Profile = () => {
                 <ThemeProvider theme={themeColor}>
                     <Grid container spacing={2} >
                         <Grid item lg={3} xs={12} sx={{ flexDirection: 'column' }}>
-                            <Paper sx={{ padding: '20px', margin: '15px 0' }} elevation={6}>
-                                < Button variant="contained" color="primary" size="large" type="submit" fullWidth onClick={() => navigate('/posts/create')}>{t("Create_Article")}</Button>
-                            </Paper>
+                            {!owner?.result
+                                ?
+                                <Paper sx={{ padding: '10px', margin: '15px 0 10px 0' }}>
+                                    <Typography variant="h6" align="center" >
+                                        {t("Please_Sign_In_to_create_your_own_memories_and_like_others_memories")}
+                                    </Typography>
+                                </Paper>
+                                :
+                                <Paper sx={{ padding: '20px', marginTop: '15px' }} elevation={6}>
+                                    < Button variant="contained" color="primary" size="large" type="submit" fullWidth onClick={() => navigate('/posts/create')}>{t("Create_Article")}</Button>
+                                </Paper>
+                            }
                             <RatingUsers />
                         </Grid>
                         {isLoading
@@ -165,16 +174,16 @@ const Profile = () => {
                                     </Grid>
                                     <Grid item xs={12} marginTop="35px">
                                         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                                            <Typography gutterBottom variant='h5' sx={{ margin: '5px auto'}}>
+                                            <Typography gutterBottom variant='h5' sx={{ margin: '5px auto' }}>
                                                 {user?.name}
                                             </Typography>
-                                            {(owner?.result.isAdmin === true) && <Typography sx={{ margin: '5px auto'}}>ID:{user?._id}</Typography>}
+                                            {(owner?.result.isAdmin === true) && <Typography sx={{ margin: '5px auto' }}>ID:{user?._id}</Typography>}
                                             <Typography component="legend" sx={{ opacity: '0.6', margin: '0 auto' }}>{t("Rating")}</Typography>
                                             <Rating name="half-rating" value={user?.likesCounter ? (user?.likesCounter / 10) : 0} precision={0.1} readOnly sx={{ margin: '0 auto' }} />
                                             {isEdit
                                                 &&
                                                 <Box sx={{ display: 'flex', justifyContent: 'center', paddingTop: '10px' }}>
-                                                    <Typography variant="subtitle1" sx={{ display: 'flex', alignItems: 'center', opacity: '0.7', fontSize: {xs: '12px', md: '16px'}, textAlign: 'center' }}>{t("Your_Rating_depends_on_the_number_of_likes_under_your_articles")}</Typography>
+                                                    <Typography variant="subtitle1" sx={{ display: 'flex', alignItems: 'center', opacity: '0.7', fontSize: { xs: '12px', md: '16px' }, textAlign: 'center' }}>{t("Your_Rating_depends_on_the_number_of_likes_under_your_articles")}</Typography>
                                                 </Box>}
                                             {isEdit
                                                 ?

@@ -6,7 +6,7 @@ import fs from 'fs';
 export const createPost = async (req, res) => {
 
     const { postTitle, postMessage, postVideo, postTags } = req.body;
-
+    console.log(req.body)
     try {
         const newPost = new PostMessage({
             title: postTitle,
@@ -14,7 +14,7 @@ export const createPost = async (req, res) => {
             creatorId: req.userId,
             creator: req.userId,
             tags: postTags.split(','),
-            selectedFile: req.file ? req.file.path : '',
+            /* selectedFile: req.file ? req.file.path : '', */
             selectedVideo: postVideo,
             createdAt: new Date().toISOString()
         });
