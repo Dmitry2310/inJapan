@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/inJapan/static/css/main.86eb07c1.css",
+    "main.js": "/inJapan/static/js/main.e6936f52.js",
+    "static/media/JapanLogo.png": "/inJapan/static/media/JapanLogo.4b047534ec12f13262b6.png",
+    "static/media/noAvatar.png": "/inJapan/static/media/noAvatar.f7ca9314ef5d1455b060.png",
+    "index.html": "/inJapan/index.html",
+    "main.86eb07c1.css.map": "/inJapan/static/css/main.86eb07c1.css.map",
+    "main.e6936f52.js.map": "/inJapan/static/js/main.e6936f52.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.86eb07c1.css",
+    "static/js/main.e6936f52.js"
+  ]
+}
