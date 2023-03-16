@@ -12,7 +12,6 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import TextEditor from "./TextEditor.jsx";
-import { baseURL } from '../../api';
 import ReactPlayer from 'react-player';
 import { useTranslation } from "react-i18next";
 
@@ -32,9 +31,16 @@ const CreatePost = ({ post, setIsChanging }) => {
     const { t } = useTranslation();
 
     //Sent req to the server
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(updatePost(post?._id, { ...postData }, selectedImage, navigate));
+        const id = post._id;
+        if (selectedImage) {
+            const base64 = await convertToBase64(selectedImage);
+            const post = { ...postData, selectedFile: base64 };
+            dispatch(updatePost(id, post, navigate));
+        }else {
+            dispatch(updatePost(id, postData, navigate));
+        }
         setIsChanging(false)
         setSelectedImage('');
     };
@@ -52,6 +58,19 @@ const CreatePost = ({ post, setIsChanging }) => {
         }
     };
 
+    const convertToBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+            fileReader.onerror = (error) => {
+                reject(error)
+            }
+        })
+    };
+
     const handleClick = () => {
         hiddenFileInput.current.click();
     };
@@ -66,7 +85,7 @@ const CreatePost = ({ post, setIsChanging }) => {
             </Paper>
         );
     };
-
+ 
     return (
         <Paper style={{ padding: '20px', borderRadius: '15px', marginTop: '30px' }} elevation={6}>
             <ThemeProvider theme={themeColor}>
@@ -89,7 +108,7 @@ const CreatePost = ({ post, setIsChanging }) => {
                                             component="img"
                                             alt={'picture'}
                                             height="220px"
-                                            image={selectedImage !== '' ? URL.createObjectURL(selectedImage) : `${baseURL}/${post?.selectedFile}` || JapanLogo}
+                                            image={selectedImage !== '' ? URL.createObjectURL(selectedImage) : post?.selectedFile || JapanLogo}
                                         />
                                     </Card>
                                     <Box>

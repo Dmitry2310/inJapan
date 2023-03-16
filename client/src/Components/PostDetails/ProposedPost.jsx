@@ -60,7 +60,7 @@ const ProposedPost = ({ post }) => {
                 className={classes.cardAction}
                 onClick={() => openPost(post._id)}
             >
-                <CardMedia className={classes.media} component="img" image={post.selectedFile ? `${baseURL}/${post.selectedFile}` : JapanLogo} title={post.title} />
+                <CardMedia className={classes.media} component="img" image={post.selectedFile ? post?.selectedFile : JapanLogo} title={post.title} />
                 <Typography sx={{ position: 'absolute', top: '0', width: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', mixBlendMode: 'darken', height: '140px' }}></Typography>
                 <div className={classes.overlay}>
                     <Typography variant="h6">{post?.creator.name}</Typography>

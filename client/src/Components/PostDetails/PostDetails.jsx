@@ -130,7 +130,7 @@ const PostDetails = () => {
                             }
                         </Box>
                         <Typography gutterBottom variant="h6" color="textSecondary" >{post?.tags.map((tag) => `#${tag}`)}</Typography>
-                        <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => navigate(`/user/${post?.creatorId}`)}>{t("Created_by")}  <Avatar alt={post?.creator.name} src={post?.creator.avatar ? `${baseURL}/${post?.creator.avatar}` : noAvatar} style={{ borderRadius: '25px', width: '25px', height: '25px', objectFit: 'contain', margin: '0 10px 0 10px' }}></Avatar> {post?.creator.name}</Typography>
+                        <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => navigate(`/user/${post?.creatorId}`)}>{t("Created_by")}  <Avatar alt={post?.creator.name} src={post?.creator.avatar ? post?.creator.avatar : noAvatar} style={{ borderRadius: '25px', width: '25px', height: '25px', objectFit: 'contain', margin: '0 10px 0 10px' }}></Avatar> {post?.creator.name}</Typography>
                         <Typography variant="body1" component={'span'} sx={{ opacity: '0.7' }}>{moment(post?.createdAt).fromNow()}</Typography>
                         {(user?.result?.isAdmin === true) && <Typography variant="body1">ID:{post?._id}</Typography>}
 
@@ -149,7 +149,7 @@ const PostDetails = () => {
                         <Grid container gap={2}>
                             <Grid item xs={12}>
                                 <Card className={classes.card} raised elevation={6}>
-                                    <CardMedia sx={{ height: '100%' }} component="img" image={post?.selectedFile ? `${baseURL}/${post?.selectedFile}` : JapanLogo} />
+                                    <CardMedia sx={{ height: '100%' }} component="img" image={post?.selectedFile ? post?.selectedFile : JapanLogo} />
                                 </Card>
                             </Grid>
                             {post?.selectedVideo
@@ -184,4 +184,3 @@ const PostDetails = () => {
 };
 
 export default PostDetails;
-

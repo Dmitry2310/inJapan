@@ -40,19 +40,6 @@ export const updateUser = (id, formData) => async (dispatch) => {
     }
 };
 
-export const updateAvatar = (selectedImage) => async (dispatch) => {
-    try {
-        const formData = new FormData();
-        formData.append('avatar', selectedImage);
-        const { data } = await api.uploadAvatar(formData);
-        const action = { type: UPDATE_USER, data };
-        localStorage.clear();
-        dispatch(action);
-    } catch (error) {
-        console.log(error);
-    }
-};
-
 export const recoverUser = () => async (dispatch) => {
     try {
         const data = JSON.parse(localStorage.getItem('profile'));

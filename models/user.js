@@ -7,7 +7,6 @@ const userSchema = mongoose.Schema({
     id: { type: String },
     likesCounter: {type: Number, default: 0},
     avatar: { type: String, default: '' },
-    coverPicture: { type: String, default: '' },
     social: {
         facebook: {type: String},
         insta: {type: String},

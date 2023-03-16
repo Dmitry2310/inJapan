@@ -45,7 +45,7 @@ const CommentSection = ({ post }) => {
               <div key={i} style={{ padding: '10px 0' }}>
                 <div style={{ display: 'flex', marginBottom: '5px' }}>
                   <Typography variant="h6" sx={{ fontWeight: '450', display: 'flex', alignItems: 'center', cursor: 'pointer' }}  onClick={() => navigate(`/user/${comment.creatorId}`)}>
-                    <Avatar alt={post?.creator.name} src={comment?.creatorAvatar ? `${baseURL}/${comment?.creatorAvatar}` : noAvatar} style={{ borderRadius: '25px', width: '25px', height: '25px', objectFit: 'contain', margin: '0 10px 0 10px', cursor: 'pointer' }}></Avatar>
+                    <Avatar alt={post?.creator.name} src={comment?.creatorAvatar ? comment?.creatorAvatar : noAvatar} style={{ borderRadius: '25px', width: '25px', height: '25px', objectFit: 'contain', margin: '0 10px 0 10px', cursor: 'pointer' }}></Avatar>
                     {comment?.creatorName}
                     <span style={{ marginLeft: '20px', opacity: '0.5', fontSize: '16px' }}>{moment(comment?.createdAt).fromNow()}</span>
                   </Typography>

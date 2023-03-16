@@ -2,21 +2,20 @@ import mongoose from "mongoose";
 import PostMessage from "../models/postMessage.js";
 import User from "../models/user.js";
 import fs from 'fs';
-import { Console } from "console";
 
 export const createPost = async (req, res) => {
 
-    const { title, message, selectedVideo, tags } = req.body;
-    
+    const post = req.body;
+
     try {
         const newPost = new PostMessage({
-            title: title,
-            message: message,
+            title: post.title,
+            message: post.message,
             creatorId: req.userId,
             creator: req.userId,
-            tags: tags,
-            /* selectedFile: req.file ? req.file.path : '', */
-            selectedVideo: selectedVideo,
+            tags: post.tags,
+            selectedFile: post.base64File ? post.base64File : '',
+            selectedVideo: post.selectedVideo,
             createdAt: new Date().toISOString()
         });
         await newPost.save();
@@ -29,27 +28,16 @@ export const createPost = async (req, res) => {
 export const updatePost = async (req, res) => {
 
     const { id } = req.params;
-    const { title, message, tags, selectedVideo, selectedFile } = req.body;
-    
+    const  postData  = req.body;
     const post = await PostMessage.findById(id);
-   /*  const pathToFile = `${post.selectedFile}`; */
-
-    /* if (post.selectedFile !== '') {
-        fs.unlink(pathToFile, function (err) {
-            if (err) {
-                throw err
-            } else {
-                console.log("Successfully deleted the file.")
-            }
-        })
-    }; */
-
+    console.log(id);
+    console.log(postData);
     const newBody = {
-        title: title,
-        message: message,
-        tags: tags,
-        selectedVideo: selectedVideo,
-       /*  selectedFile: req.file ? req.file.path : coverFile, */
+        title: postData.title,
+        message: postData.message,
+        tags: postData.tags,
+        selectedVideo: postData.selectedVideo,
+        selectedFile: postData?.selectedFile ? postData?.selectedFile : post.selectedFile,
     };
 
     try {
@@ -108,7 +96,7 @@ export const getPost = async (req, res) => {
 export const getPostsBySearch = async (req, res) => {
 
     const { searchQuery, tags } = req.query;
-    console.log(req.query)
+
     try {
         const title = new RegExp(searchQuery, 'i'); // "i" => Test, test, TEST => test
 
@@ -123,19 +111,9 @@ export const getPostsBySearch = async (req, res) => {
 export const deletePost = async (req, res) => {
 
     const { id } = req.params;
-
+    
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No post with this id');
-    const post = await PostMessage.findById(id);
-    const pathToFile = `${post.selectedFile}`;
-    if (post.selectedFile !== '') {
-        fs.unlink(pathToFile, function (err) {
-            if (err) {
-                throw err
-            } else {
-                console.log("Successfully deleted the file.")
-            }
-        })
-    };
+
     await PostMessage.findByIdAndRemove(id);
     res.json({ message: "Post deleted successfully" });
 };
@@ -167,6 +145,7 @@ export const likePost = async (req, res) => {
     await User.findByIdAndUpdate(post.creatorId, user, { new: true });
     res.json(updatedPost);
 };
+
 //------
 export const commentPost = async (req, res) => {
 
@@ -190,6 +169,7 @@ export const commentPost = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 };
+
 //---------
 export const getFolPosts = async (req, res) => {
 
