@@ -14,7 +14,6 @@ import { getAuthorBySearch } from './../../actions/users';
 import { clearAuthors } from './../../actions/users';
 import { clearNotification } from './../../actions/users';
 import { Button } from "@mui/material";
-import { baseURL } from "../../api";
 import { useTranslation } from "react-i18next";
 
 const RatingUsers = () => {
@@ -104,7 +103,7 @@ const RatingUsers = () => {
                                         {
                                             users?.map((item) => (
                                                 <Box style={{ marginBottom: '7px', display: 'flex', cursor: 'pointer' }} key={item.name} onClick={() => navigate(`/user/${item._id}`)}>
-                                                    <Avatar alt={item?.name} src={item?.avatar ? `${baseURL}/${item?.avatar}` : noAvatar} style={{ borderRadius: '50px', width: '50px', height: '50px', objectFit: 'contain' }}></Avatar>
+                                                    <Avatar alt={item?.name} src={item?.avatar ? item?.avatar : noAvatar} style={{ borderRadius: '50px', width: '50px', height: '50px', objectFit: 'contain' }}></Avatar>
                                                     <Box style={{ display: 'flex', flexDirection: 'column', paddingLeft: '20px' }}>
                                                         <Typography>{item?.name}</Typography>
                                                         <Rating name="half-rating" size="small" value={item?.likesCounter ? (item?.likesCounter / 10) : 0} precision={0.1} readOnly sx={{ margin: '0 auto' }} />

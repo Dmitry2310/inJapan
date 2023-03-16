@@ -15,14 +15,13 @@ import Grow from '@mui/material/Grow';
 import { ThemeProvider } from "@material-ui/core";
 import { themeColor } from '../../App';
 import { getUser } from "./../../actions/users";
-import { updateUser, updateAvatar } from "./../../actions/auth";
+import { updateUser } from "./../../actions/auth";
 import AllPublishedPosts from "./AllPublishedPosts/AllPublishedPosts";
 import Avatar from '@mui/material/Avatar';
 import Social from './Social';
 import RatingUsers from './../RatingUsers/RatingUsers';
 import Paper from '@mui/material/Paper';
 import { useLocation } from "react-router-dom";
-import { baseURL } from './../../api/index';
 import TextEditorProfile from './TextEditorProfile';
 import { useTranslation } from "react-i18next";
 
@@ -41,7 +40,7 @@ const Profile = () => {
     const { id } = useParams();
     const location = useLocation();
     const { t } = useTranslation();
-   
+
     //SET new user ----------------------
     useEffect(() => {
         if (id === ownerId) {
@@ -77,30 +76,39 @@ const Profile = () => {
     const saveData = () => {
         setIsEdit(false);
         setUser(changedUser);
-        if (selectedImage) {
-            dispatch(updateAvatar(selectedImage));
-        };
         dispatch(updateUser(id, changedUser));
-        setSelectedImage('');
     };
 
     const cancel = () => {
         setIsEdit(false);
         setUser(myProfile);
-        setSelectedImage('');
     };
 
     //Upload user photo -------------
-    const [selectedImage, setSelectedImage] = useState('');
     const hiddenFileInput = React.useRef(null);
 
-    const handleAvatarChange = (e) => {
+    const handleAvatarChange = async (e) => {
         if (e.target.files.length !== 0) {
-            setSelectedImage(e.target.files[0]);
+            const base64 = await convertToBase64(e.target.files[0]);
+            setChangetUser({ ...changedUser, avatar: base64 })
         } else {
             return;
         }
     };
+
+    const convertToBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+            fileReader.onerror = (error) => {
+                reject(error)
+            }
+        })
+    };
+
     const handleClick = () => {
         hiddenFileInput.current.click();
     };
@@ -139,9 +147,9 @@ const Profile = () => {
                                             <Box>
                                                 {(isEdit)
                                                     ?
-                                                    <Avatar alt={user?.name} src={selectedImage !== "" ? URL.createObjectURL(selectedImage) : `${baseURL}/${changedUser?.avatar}` || noAvatar} style={{ borderRadius: '500px', width: '150px', height: '150px', border: '5px solid white', objectFit: 'contain' }}></Avatar>
+                                                    <Avatar alt={user?.name} src={/* selectedImage !== "" ? URL.createObjectURL(selectedImage) : */ changedUser?.avatar || noAvatar} style={{ borderRadius: '500px', width: '150px', height: '150px', border: '5px solid white', objectFit: 'contain' }}></Avatar>
                                                     :
-                                                    <Avatar alt={user?.name} src={user?.avatar ? `${baseURL}/${user?.avatar}` : noAvatar} sx={{ borderRadius: '500px', width: { xs: '200px', sm: '250px' }, height: { xs: '200px', sm: '250px' }, border: '5px solid white', objectFit: 'contain', margin: '0 auto' }}></Avatar>
+                                                    <Avatar alt={user?.name} src={user?.avatar ? user?.avatar : noAvatar} sx={{ borderRadius: '500px', width: { xs: '200px', sm: '250px' }, height: { xs: '200px', sm: '250px' }, border: '5px solid white', objectFit: 'contain', margin: '0 auto' }}></Avatar>
                                                 }
                                             </Box>
                                             <>

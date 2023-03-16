@@ -38,16 +38,10 @@ export const getUserPosts = (userId) => async (dispatch) => {
     }
 };
 
-export const createPost = (postData, selectedImage, navigate) => async (dispatch) => {
+export const createPost = (post, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
-       /*  const formData = new FormData();
-        formData.append('coverImage', selectedImage);
-        formData.append('postTitle', post.title);
-        formData.append('postMessage', post.message);
-        formData.append('postTags', post.tags);
-        formData.append('postVideo', post.selectedVideo); */
-        const { data } = await api.createPost(postData);
+        const { data } = await api.createPost(post);
         navigate(`/posts/${data._id}`);
         dispatch({ type: CREATE, payload: data });
         dispatch({ type: END_LOADING });
@@ -56,19 +50,9 @@ export const createPost = (postData, selectedImage, navigate) => async (dispatch
     }
 };
 
-export const updatePost = (id, post, selectedImage, navigate) => async (dispatch) => {
+export const updatePost = (id, post, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
-        /* const formData = {}
-        formData.append('postTitle', post.title);
-        formData.append('postMessage', post.message);
-        formData.append('postTags', post.tags);
-        formData.append('postVideo', post.selectedVideo);
-        formData.append('coverFile', post.selectedFile); */
-
-       /*  if (selectedImage !== '') {
-            formData.append('coverImage', selectedImage);
-        } */
         const { data } = await api.updatePost(id, post);
         const action = { type: UPDATE, payload: data };
         dispatch(action);

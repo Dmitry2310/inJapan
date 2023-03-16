@@ -113,7 +113,7 @@ const PostDetails = () => {
         <Paper style={{ padding: '20px', borderRadius: '15px', marginTop: '30px' }} elevation={6}>
             <ThemeProvider theme={themeColor} >
                 <ModalWindow handleOpen={handleOpen} handleClose={handleClose} open={open} postId={post?._id} deleteThisPost={deleteThisPost} />
-                <Grid container gap={2} sx={{ justifyContent: 'space-between', display: 'flex', flexDirection: {xs: 'column-reverse', sm: 'row'} }}>
+                <Grid container gap={2} sx={{ justifyContent: 'space-between', display: 'flex', flexDirection: { xs: 'column-reverse', sm: 'row' } }}>
                     <Grid item xs={12} sm={6} sx={{}}>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <Typography variant="h3" >{post?.title}</Typography>
@@ -130,20 +130,26 @@ const PostDetails = () => {
                             }
                         </Box>
                         <Typography gutterBottom variant="h6" color="textSecondary" >{post?.tags.map((tag) => `#${tag}`)}</Typography>
-                        <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => navigate(`/user/${post?.creatorId}`)}>{t("Created_by")}  <Avatar alt={post?.creator.name} src={post?.creator.avatar ? `${baseURL}/${post?.creator.avatar}` : noAvatar} style={{ borderRadius: '25px', width: '25px', height: '25px', objectFit: 'contain', margin: '0 10px 0 10px' }}></Avatar> {post?.creator.name}</Typography>
+                        <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => navigate(`/user/${post?.creatorId}`)}>{t("Created_by")}  <Avatar alt={post?.creator.name} src={post?.creator.avatar ? post?.creator.avatar : noAvatar} style={{ borderRadius: '25px', width: '25px', height: '25px', objectFit: 'contain', margin: '0 10px 0 10px' }}></Avatar> {post?.creator.name}</Typography>
                         <Typography variant="body1" component={'span'} sx={{ opacity: '0.7' }}>{moment(post?.createdAt).fromNow()}</Typography>
                         {(user?.result?.isAdmin === true) && <Typography variant="body1">ID:{post?._id}</Typography>}
-                        
+
                         <Divider style={{ margin: '20px 0' }} />
                         <Box>
                             <Typography variant="body1" component={'span'} sx={{ opacity: '0.9', display: 'flex' }} dangerouslySetInnerHTML={{ __html: post?.message }}></Typography>
+                            {user?.result?._id !== post?.creatorId
+                                &&
+                                <Button size="large" color="primary" sx={{ border: '1px solid', display: 'flex' }} disabled={!user?.result} onClick={handleLike}>
+                                    <Likes />
+                                </Button>
+                            }
                         </Box>
                     </Grid>
                     <Grid item xs={12} sm={5} >
                         <Grid container gap={2}>
                             <Grid item xs={12}>
                                 <Card className={classes.card} raised elevation={6}>
-                                    <CardMedia sx={{ height: '100%' }} component="img" image={post?.selectedFile ? `${baseURL}/${post?.selectedFile}` : JapanLogo} />
+                                    <CardMedia sx={{ height: '100%' }} component="img" image={post?.selectedFile ? post?.selectedFile : JapanLogo} />
                                 </Card>
                             </Grid>
                             {post?.selectedVideo
@@ -170,12 +176,6 @@ const PostDetails = () => {
                     :
                     <RecomendetPosts posts={posts} post={post} />
                 }
-                {user?.result?._id !== post?.creatorId
-                    &&
-                    <Button size="large" color="primary" sx={{ border: '1px solid', display: 'flex' }} disabled={!user?.result} onClick={handleLike}>
-                        <Likes />
-                    </Button>
-                }
                 <Divider style={{ margin: '20px 0' }} />
                 <CommentSection post={post} />
             </ThemeProvider>
@@ -184,4 +184,3 @@ const PostDetails = () => {
 };
 
 export default PostDetails;
-

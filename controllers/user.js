@@ -9,17 +9,17 @@ export const signIn = async (req, res) => {
     const { email, password } = req.body;
     try {
         const existingUser = await User.findOne({ email });
-        
+
         if (!existingUser) return res.status(400).json({ message: "User doesn't exist." });
 
         const isPasswordcorrect = await bcrypt.compare(password, existingUser.password);
         if (!isPasswordcorrect) return res.status(400).json({ message: "Invalid password or email" });
 
         const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: "3h" });
-        console.log(token)
+        
         res.status(200).json({ result: existingUser, token })
     } catch (error) {
-        res.status(500).json({ error});
+        res.status(500).json({ error });
     }
 };
 
@@ -91,6 +91,7 @@ export const updateUser = async (req, res) => {
 
     const { id } = req.params;
     const userParams = req.body;
+    
     try {
         if (id === req.userId || req.body.isAdmin) {
             const updatedUser = await User.findByIdAndUpdate(id, userParams, { new: true });
@@ -104,31 +105,27 @@ export const updateUser = async (req, res) => {
     }
 };
 
-export const updateAvatar = async (req, res) => {
+/* export const updateAvatar = async (req, res) => {
 
+    const { base64 } = req.body;
     try {
-        if (req.file) {
-            const user = await User.findById(req.userId);
-            const pathToFile = `${user.avatar}`;
-            if (user.avatar !== '') {
-                fs.unlink(pathToFile, function (err) {
-                    if (err) {
-                        throw err
-                    } else {
-                        console.log("Successfully deleted the file.")
-                    }
-                })
-            };
-            const updatedUser = await User.findByIdAndUpdate(req.userId, { avatar: req.file.path }, { new: true });
-            const token = jwt.sign({ email: updatedUser.email, id: updatedUser._id }, process.env.SECRET_KEY, { expiresIn: "3h" });
-            res.status(200).json({ result: updatedUser, token });
-        } else {
-            res.status(403).json({ message: "Where is a photo?" });
-        }
+        if (user.avatar !== '') {
+            fs.unlink(pathToFile, function (err) {
+                if (err) {
+                    throw err
+                } else {
+                    console.log("Successfully deleted the file.")
+                }
+            })
+        }; 
+        const updatedUser = await User.findByIdAndUpdate(req.userId, { avatar: base64 }, { new: true });
+        const token = jwt.sign({ email: updatedUser.email, id: updatedUser._id }, process.env.SECRET_KEY, { expiresIn: "3h" });
+        console.log(updateUser);
+        res.status(200).json({ result: updatedUser, token });
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
-};
+}; */
 
 export const deleteUser = async (req, res) => {
 

@@ -123,7 +123,7 @@ export const Navbar = () => {
                         <div className={classes.appBarButtons} >
                             {user ? (
                                 <div className={classes.profile} >
-                                    <Avatar alt={user?.name} src={(user?.avatar !== "") ? `${baseURL}/${user?.avatar}` : noAvatar} sx={{ marginRight: '30px', cursor: 'pointer' }} onClick={goToProfile}>{user?.name.charAt(0)}</Avatar>
+                                    <Avatar alt={user?.name} src={(user?.avatar !== "") ? user?.avatar : noAvatar} sx={{ marginRight: '30px', cursor: 'pointer' }} onClick={goToProfile}>{user?.name.charAt(0)}</Avatar>
                                     <Button variant="contained" color="secondary" onClick={logOut}>{t("Logout")}</Button>
                                 </div>
                             ) : (
@@ -137,7 +137,7 @@ export const Navbar = () => {
                             <Box sx={{ flexGrow: 0 }}>
                                 <Tooltip title="Open settings">
                                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                        <Avatar alt="Remy Sharp" src={user?.avatar ? `${baseURL}/${user?.avatar}` : noAvatar} />
+                                        <Avatar alt="Remy Sharp" src={user?.avatar ? user?.avatar : noAvatar} />
                                     </IconButton>
                                 </Tooltip>
                                 <Menu

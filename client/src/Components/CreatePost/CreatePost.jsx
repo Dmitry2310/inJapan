@@ -34,9 +34,15 @@ const CreatePost = () => {
         setSelectedImage('');
     };
     //Sent req to the server
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(createPost({ ...postData }, selectedImage, navigate));
+        if (selectedImage) {
+            const base64 = await convertToBase64(selectedImage);
+            const post = { ...postData, base64File: base64 };
+            dispatch(createPost(post, navigate));
+        } else {
+            dispatch(createPost(postData, navigate));
+        }
         setIsLoading(true);
         clear();
         setSelectedImage('');
@@ -55,11 +61,24 @@ const CreatePost = () => {
         }
     };
 
+    const convertToBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+            fileReader.onerror = (error) => {
+                reject(error)
+            }
+        })
+    };
+
     const handleClick = () => {
         hiddenFileInput.current.click();
     };
     // END Upload cover photo -------------
-    
+
     if (isLoading) {
         return (
             <Paper elevation={6} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '15px', height: '39vh', marginTop: '50px' }}>
