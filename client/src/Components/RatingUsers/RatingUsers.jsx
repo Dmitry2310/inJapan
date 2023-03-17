@@ -65,7 +65,7 @@ const RatingUsers = () => {
 
     return (
         <>
-            <Paper elevation={6} sx={{ minHeight: '335px', padding: '0 10px 10px 10px', display: 'flex', flexDirection: 'column', maxHeight: '385px', marginTop: '10px' }}>
+            <Paper elevation={6} sx={{ minHeight: '385px', padding: '0 10px 10px 10px', display: 'flex', flexDirection: 'column', maxHeight: '385px', marginTop: '10px' }}>
                 <Box sx={{ display: 'flex', padding: '5px', alignItems: 'center', justifyContent: 'space-between' }}>
                     {isSearch
                         ?

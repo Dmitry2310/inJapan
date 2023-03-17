@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const baseURL = 'http://localhost:5000';
+export const baseURL = 'https://injapan-production.up.railway.app';
 
 const API = axios.create({
     baseURL
