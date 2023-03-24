@@ -89,8 +89,8 @@ const Post = ({ post }) => {
                     <Typography variant="body2" sx={{ padding: '5px 10px 0 16px', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', width: '90%' }} color="textSecondary" component="h2">{post.tags.map((tag) => `#${tag} `)}</Typography>
                 </div>
                 <Typography style={{ padding: '0 16px', alignSelf: 'start', marginBottom: '0', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', width: '90%' }} gutterBottom variant="h5" component="h2">{post.title}</Typography>
-                <CardContent sx={{ alignSelf: 'start', minHeight: '90px'}} >
-                    <Typography variant="body2" component={'span'} sx={{opacity: '0.7'}} dangerouslySetInnerHTML={{ __html: post.message.split(' ').splice(0, 10).join(' ')}}></Typography>
+                <CardContent sx={{ alignSelf: 'start', minHeight: '95px'}} >
+                    <Typography variant="body2" component={'span'} sx={{opacity: '0.7'}} dangerouslySetInnerHTML={{ __html: post.message.split(' ').splice(0, 8).join(' ')}}></Typography>
                 </CardContent>
             </ButtonBase>
             <ThemeProvider theme={themeColor} >
