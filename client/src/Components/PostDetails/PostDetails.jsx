@@ -114,26 +114,29 @@ const PostDetails = () => {
             <ThemeProvider theme={themeColor} >
                 <ModalWindow handleOpen={handleOpen} handleClose={handleClose} open={open} postId={post?._id} deleteThisPost={deleteThisPost} />
                 <Grid container gap={2} sx={{ justifyContent: 'space-between', display: 'flex', flexDirection: { xs: 'column-reverse', sm: 'row' } }}>
-                    <Grid item xs={12} sm={6} sx={{}}>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <Typography variant="h3" >{post?.title}</Typography>
-                            {((user?.result?._id === post?.creatorId) || (user?.result?.isAdmin === true))
-                                &&
-                                <Box sx={{ display: 'flex', gap: '10px' }}>
-                                    <Button size="small" variant='contained' color="primary" sx={{ maxHeight: '31px' }} onClick={() => setIsChanging(true)}>
-                                        {t("Edit")}
-                                    </Button>
-                                    <Button size="small" variant='contained' sx={{ maxHeight: '31px' }} color="secondary" onClick={handleOpen}>
-                                        <DeleteIcon fontSize="small" />  {t("Delete")}
-                                    </Button>
-                                </Box>
-                            }
-                        </Box>
+                    <Grid item xs={12} sm={6}>
+                        <Grid container sx={{ display: 'flex', flexDirection: { xs: 'column-reverse', sm: 'row' } }}>
+                            <Grid item xs={12} sm={6} >
+                                <Typography variant='h4' >{post?.title}</Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={6} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                {((user?.result?._id === post?.creatorId) || (user?.result?.isAdmin === true))
+                                    &&
+                                    <Box sx={{ display: 'flex', gap: '10px', margin: { xs: '20px 0', sm: '0 0' } }}>
+                                        <Button size="small" variant='contained' color="primary" sx={{ maxHeight: '31px' }} onClick={() => setIsChanging(true)}>
+                                            {t("Edit")}
+                                        </Button>
+                                        <Button size="small" variant='contained' sx={{ maxHeight: '31px' }} color="secondary" onClick={handleOpen}>
+                                            <DeleteIcon fontSize="small" />  {t("Delete")}
+                                        </Button>
+                                    </Box>
+                                }
+                            </Grid>
+                        </Grid>
                         <Typography gutterBottom variant="h6" color="textSecondary" >{post?.tags.map((tag) => `#${tag}`)}</Typography>
                         <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => navigate(`/user/${post?.creatorId}`)}>{t("Created_by")}  <Avatar alt={post?.creator.name} src={post?.creator.avatar ? post?.creator.avatar : noAvatar} style={{ borderRadius: '25px', width: '25px', height: '25px', objectFit: 'contain', margin: '0 10px 0 10px' }}></Avatar> {post?.creator.name}</Typography>
                         <Typography variant="body1" component={'span'} sx={{ opacity: '0.7' }}>{moment(post?.createdAt).fromNow()}</Typography>
                         {(user?.result?.isAdmin === true) && <Typography variant="body1">ID:{post?._id}</Typography>}
-
                         <Divider style={{ margin: '20px 0' }} />
                         <Box>
                             <Typography variant="body1" component={'span'} sx={{ opacity: '0.9', display: 'flex' }} dangerouslySetInnerHTML={{ __html: post?.message }}></Typography>
@@ -149,7 +152,7 @@ const PostDetails = () => {
                         <Grid container gap={2}>
                             <Grid item xs={12}>
                                 <Card className={classes.card} raised elevation={6}>
-                                    <CardMedia sx={{ height: '100%' }} component="img" image={post?.selectedFile ? post?.selectedFile : JapanLogo} />
+                                    <CardMedia sx={{ height: '100%', minHeight: '300px' }} component="img" image={post?.selectedFile ? post?.selectedFile : JapanLogo} />
                                 </Card>
                             </Grid>
                             {post?.selectedVideo

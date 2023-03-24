@@ -112,7 +112,7 @@ const CreatePost = ({ post, setIsChanging }) => {
                                         />
                                     </Card>
                                     <Box>
-                                        <input type='file' style={{ display: 'none' }} onChange={fileChange} ref={hiddenFileInput}></input>
+                                        <input type='file' accept="image/*" style={{ display: 'none' }} onChange={fileChange} ref={hiddenFileInput}></input>
                                         <Button variant='contained' onClick={handleClick}>{(post?.selectedFile || selectedImage) ? t("Change_cover_Image") : t("Upload_cover_Image")}</Button>
                                     </Box>
                                 </Grid>
