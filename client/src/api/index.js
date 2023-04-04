@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const baseURL = 'https://injapan.onrender.com';
+export const baseURL = 'https://injapan-production.up.railway.app';
 
 const API = axios.create({
     baseURL
