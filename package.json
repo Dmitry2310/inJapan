@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "dev": "node index.js"
+    "dev": "nodemon index.js",
+    "build": "npm i"
   },
   "keywords": [],
   "author": "Dmitry Avgustinovich",
